@@ -1,0 +1,112 @@
+{
+  "format_version": 1,
+  "generated_at": "2026-10-10T17:58:01.908735+07:00",
+  "model": "TF-IDF word unigram/bigram + Logistic Regression",
+  "metrics": {
+    "Baseline": {
+      "spam_precision": 0.9732142857142857,
+      "spam_recall": 0.8515625,
+      "spam_f1": 0.9083333333333333,
+      "accuracy": 0.9786821705426356,
+      "false_positives": 3,
+      "false_negatives": 19,
+      "confusion_matrix": [
+        [
+          901,
+          3
+        ],
+        [
+          19,
+          109
+        ]
+      ],
+      "test_rows": 1032
+    },
+    "Poisoned": {
+      "spam_precision": 1.0,
+      "spam_recall": 0.328125,
+      "spam_f1": 0.49411764705882355,
+      "accuracy": 0.9166666666666666,
+      "false_positives": 0,
+      "false_negatives": 86,
+      "confusion_matrix": [
+        [
+          904,
+          0
+        ],
+        [
+          86,
+          42
+        ]
+      ],
+      "test_rows": 1032
+    },
+    "Defended": {
+      "spam_precision": 1.0,
+      "spam_recall": 0.765625,
+      "spam_f1": 0.8672566371681416,
+      "accuracy": 0.9709302325581395,
+      "false_positives": 0,
+      "false_negatives": 30,
+      "confusion_matrix": [
+        [
+          904,
+          0
+        ],
+        [
+          30,
+          98
+        ]
+      ],
+      "test_rows": 1032
+    }
+  },
+  "summary": {
+    "poison_rate": 0.6,
+    "defence_threshold": 0.65,
+    "changed_rows": 231,
+    "quarantined_rows": 193,
+    "trusted_rows": 1031,
+    "untrusted_rows": 3096,
+    "defended_training_rows": 3934,
+    "changed_fraction_of_all_training_rows": 0.055972861642839836,
+    "seed": 42,
+    "data_split_seed": 42,
+    "test_fingerprint": "0c6227d3c6b27d24bc6571084ed63311bf004970935c46be07903657056a093b"
+  },
+  "data": {
+    "raw_rows": 5574,
+    "malformed_rows": 0,
+    "unique_rows": 5159,
+    "duplicates_removed": 415,
+    "conflicts_removed": 0,
+    "train_rows": 4127,
+    "test_rows": 1032,
+    "trusted_rows": 1031,
+    "untrusted_rows": 3096,
+    "raw_ham": 4827,
+    "raw_spam": 747,
+    "clean_ham": 4517,
+    "clean_spam": 642,
+    "corpus_sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d"
+  },
+  "environment": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "joblib": "1.6.0",
+    "python": "3.12.3"
+  },
+  "assumptions": [
+    "Protected correctly labelled reference subset: 25 percent of TRAIN only.",
+    "Attacker flips observed spam labels in untrusted training only; no text changes.",
+    "Defence receives no clean labels of attacked rows, attack manifest, or test rows.",
+    "Same clean holdout; default seed 42; thresholds fixed before the default run."
+  ],
+  "limitations": [
+    "One old largely English spam/ham corpus, not phishing labels or modern-scam coverage.",
+    "One exploratory split, not a validated robustness or deployment claim.",
+    "Quarantine can remove genuine ham; protection depends on the trusted-set assumption.",
+    "Repeated tuning against this visible test set requires a fresh final holdout."
+  ]
+}
